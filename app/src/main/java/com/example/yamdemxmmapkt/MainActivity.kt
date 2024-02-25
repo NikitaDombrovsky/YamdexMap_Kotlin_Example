@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                 geometry = point
                 setIcon(imageProvider)
             }
+
         }
 
         val polygon = Polygon(LinearRing(points), emptyList())
