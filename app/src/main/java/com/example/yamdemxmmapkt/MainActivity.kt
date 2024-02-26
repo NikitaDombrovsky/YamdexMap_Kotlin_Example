@@ -53,9 +53,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        // Инициализация должна быть до setContentView
         MapKitFactory.initialize(this)
         setContentView(R.layout.activity_main)
+
         mapView = findViewById(R.id.mapview)
 
         val map = mapView.mapWindow.map
@@ -63,13 +64,15 @@ class MainActivity : AppCompatActivity() {
 
         val imageProvider = ImageProvider.fromBitmap(this.getBitmapFromVectorDrawable(R.drawable.test_pin))
 
-        // TODO Разработчкики этой хуйни ебанные пидарасы
+        // Добавление метки с картинкой
+        // Работают только декларативные методы и только с bitmap
         val placemark1 = mapView.map.mapObjects.addPlacemark(
             POINT,
+            // Работает только с форматом bitmap
             ImageProvider.fromBitmap(this.getBitmapFromVectorDrawable(R.drawable.test_pin)));
         placemark1.addTapListener(placemarkTapListener)
 
-
+        // Добавление нескольких меток
         val pinsCollection = mapView.map.mapObjects.addCollection()
         val points = listOf(
             Point(59.935493, 30.327392),
@@ -138,6 +141,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Метод для конвертации drawable в bitmap
     fun Context.getBitmapFromVectorDrawable(drawableId: Int): Bitmap? {
         var drawable = ContextCompat.getDrawable(this, drawableId) ?: return null
 
